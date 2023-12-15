@@ -7,6 +7,13 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField]
     private Vector3 direction;
 
+    [SerializeField]
+    GameScoreUI score;
+
+    [SerializeField]
+    float ballSpeedInitial = 2.0f;
+    float BallSpeed = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,22 +26,18 @@ public class BallBehaviour : MonoBehaviour
             direction = Vector3.left;
         }
 
-        if (Random.Range(0f, 1f) < 0.5f)
-        {
-          //  direction += Vector3.up;
-        }
-        else
-        {
-            //direction += Vector3.down;
-        }
+        direction.y = Random.Range(-1f, 1f);
 
+        BallSpeed = ballSpeedInitial;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += direction * Time.deltaTime;
+        transform.position += direction * BallSpeed * Time.deltaTime;
+
+       
     }
 
 
@@ -44,6 +47,36 @@ public class BallBehaviour : MonoBehaviour
         {
             direction.x = -direction.x;
             direction.y = Random.Range(-1f, 1f);
+            BallSpeed += 0.4f;
+        }
+        else if (collision.gameObject.CompareTag("Border"))
+        {
+           direction.y = -direction.y;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("GoalZone1"))
+        {
+            ResetBall();
+            score.goalPlayerTwo();
+        }
+        if (collision.gameObject.CompareTag("GoalZone1"))
+        {
+
+            ResetBall();
+            score.goalPlayerOne();
+        }
+
+    }
+    private void ResetBall()
+    {
+        transform.position = Vector3.zero;
+        BallSpeed = ballSpeedInitial;
+        direction.x = -direction.x;
+        direction.y = Random.Range(-1f, 1f);
+    }
+
+
 }
