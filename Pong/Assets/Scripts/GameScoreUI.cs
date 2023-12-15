@@ -28,7 +28,7 @@ public class GameScoreUI : MonoBehaviour
     }
     public void goalPlayerTwo()
     {
-        UpdateScoreText();
         goalsPlayerTwo++;
+        UpdateScoreText();
     }
 }

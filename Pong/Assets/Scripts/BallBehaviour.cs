@@ -62,7 +62,7 @@ public class BallBehaviour : MonoBehaviour
             ResetBall();
             score.goalPlayerTwo();
         }
-        if (collision.gameObject.CompareTag("GoalZone1"))
+        if (collision.gameObject.CompareTag("GoalZone2"))
         {
 
             ResetBall();
